@@ -41,8 +41,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/properties", request.url));
   }
 
-  // ログイン済みでペア未設定なら /pair へ（/pair 自体は除外）
-  if (user && pathname !== "/pair") {
+  // ログイン済みでペア未設定なら /pair へ（/pair と公開パスは除外）
+  if (user && pathname !== "/pair" && !publicPaths.includes(pathname)) {
     const { data: pair } = await supabase
       .from("pairs")
       .select("id")
