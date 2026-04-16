@@ -94,6 +94,26 @@ vi.mock("@/lib/supabaseClient", () => ({
           }),
         };
       }
+      if (table === "pairs") {
+        return {
+          select: () => ({
+            or: () => ({
+              eq: () => ({
+                maybeSingle: () => Promise.resolve({ data: { user_a_id: "user-123", user_b_id: "user-456" } }),
+              }),
+            }),
+          }),
+        };
+      }
+      if (table === "users") {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({ data: { display_name: "ゆうた" } }),
+            }),
+          }),
+        };
+      }
     },
   }),
 }));

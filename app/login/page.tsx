@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [signupDone, setSignupDone] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -69,7 +69,7 @@ export default function LoginPage() {
           </p>
           <button
             onClick={() => { setMode("login"); setSignupDone(false); }}
-            className="mt-6 text-sm text-emerald-400 hover:underline"
+            className="mt-6 text-sm text-[var(--accent)] hover:underline"
           >
             ログイン画面に戻る
           </button>
@@ -122,7 +122,7 @@ export default function LoginPage() {
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="例：たろう"
-                  className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
                 />
               </div>
             )}
@@ -134,7 +134,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="example@email.com"
-                className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               />
             </div>
             <div>
@@ -145,7 +145,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="6文字以上"
-                className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               />
             </div>
 
@@ -157,7 +157,7 @@ export default function LoginPage() {
               type="submit"
               data-testid="submit-button"
               disabled={loading}
-              className="w-full py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-emerald-400 hover:bg-emerald-300 transition-colors disabled:opacity-50"
+              className="w-full py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50"
             >
               {loading ? "処理中..." : mode === "login" ? "ログイン" : "アカウント作成"}
             </button>

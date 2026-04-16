@@ -24,11 +24,25 @@ vi.stubGlobal("fetch", mockFetch);
 // Supabaseクライアントのモック
 const mockGetUser = vi.fn();
 const mockInsert = vi.fn();
+const mockPairMaybeSingle = vi.fn();
 
 vi.mock("@/lib/supabaseClient", () => ({
   createClient: () => ({
     auth: { getUser: mockGetUser },
-    from: () => ({ insert: mockInsert }),
+    from: (table: string) => {
+      if (table === "pairs") {
+        return {
+          select: () => ({
+            or: () => ({
+              eq: () => ({
+                maybeSingle: mockPairMaybeSingle,
+              }),
+            }),
+          }),
+        };
+      }
+      return { insert: mockInsert };
+    },
   }),
 }));
 
@@ -37,8 +51,11 @@ describe("NewPropertyPage", () => {
     mockPush.mockReset();
     mockInsert.mockReset();
     mockFetch.mockReset();
+    mockPairMaybeSingle.mockReset();
     // デフォルト：ログイン済みユーザー
     mockGetUser.mockResolvedValue({ data: { user: { id: "user-123" } } });
+    // デフォルト：アクティブなペアあり
+    mockPairMaybeSingle.mockResolvedValue({ data: { id: "pair-123" } });
     // デフォルト：ジオコーディング成功
     mockFetch.mockResolvedValue({
       ok: true,

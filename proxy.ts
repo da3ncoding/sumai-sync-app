@@ -40,6 +40,20 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/properties", request.url));
   }
 
+  // ログイン済みでペア未設定なら /pair へ（/pair 自体は除外）
+  if (user && pathname !== "/pair") {
+    const { data: pair } = await supabase
+      .from("pairs")
+      .select("id")
+      .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
+      .eq("status", "active")
+      .maybeSingle();
+
+    if (!pair) {
+      return NextResponse.redirect(new URL("/pair", request.url));
+    }
+  }
+
   return response;
 }
 

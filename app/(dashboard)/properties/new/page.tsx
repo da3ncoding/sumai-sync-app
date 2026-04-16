@@ -19,7 +19,7 @@ export default function NewPropertyPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim() || !address.trim()) return;
     setLoading(true);
@@ -45,6 +45,13 @@ export default function NewPropertyPage() {
       // ジオコーディング失敗は無視（lat/lngはnullのまま）
     }
 
+    const { data: pair } = await supabase
+      .from("pairs")
+      .select("id")
+      .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`)
+      .eq("status", "active")
+      .maybeSingle();
+
     const { error: insertError } = await supabase.from("properties").insert({
       title: title.trim(),
       address: address.trim(),
@@ -53,7 +60,7 @@ export default function NewPropertyPage() {
       lng,
       status: "active",
       created_by: user.id,
-      pair_id: null, // ペア機能は後で実装
+      pair_id: pair?.id ?? null,
     });
 
     if (insertError) {
@@ -94,7 +101,7 @@ export default function NewPropertyPage() {
               onChange={(e) => setTitle(e.target.value)}
               required
               placeholder="例：○○マンション 301号室"
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
           <div>
@@ -107,7 +114,7 @@ export default function NewPropertyPage() {
               onChange={(e) => setAddress(normalizeAddress(e.target.value))}
               required
               placeholder="例：東京都渋谷区渋谷1-1-1"
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
             <p className="text-xs text-zinc-600 mt-1">住所から地図ピンを自動設定します。数字は半角で入力してください（例：東京都千代田区千代田1-1）</p>
           </div>
@@ -120,7 +127,7 @@ export default function NewPropertyPage() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
 
@@ -129,7 +136,7 @@ export default function NewPropertyPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-emerald-400 hover:bg-emerald-300 transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50"
           >
             {loading && <Loader2 size={14} className="animate-spin" />}
             {loading ? "登録中..." : "物件を登録する"}

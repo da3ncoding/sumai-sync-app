@@ -37,7 +37,7 @@ export default function EditPropertyPage() {
     init();
   }, [id]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim() || !address.trim()) return;
     setSaving(true);
@@ -119,7 +119,7 @@ export default function EditPropertyPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
           <div>
@@ -131,7 +131,7 @@ export default function EditPropertyPage() {
               value={address}
               onChange={(e) => setAddress(normalizeAddress(e.target.value))}
               required
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
             <p className="text-xs text-zinc-600 mt-1">住所を変更すると地図ピンを自動で再取得します</p>
           </div>
@@ -144,7 +144,7 @@ export default function EditPropertyPage() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
             />
           </div>
 
@@ -153,7 +153,7 @@ export default function EditPropertyPage() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-emerald-400 hover:bg-emerald-300 transition-colors disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium text-zinc-900 bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50"
           >
             {saving && <Loader2 size={14} className="animate-spin" />}
             {saving ? "保存中..." : "変更を保存"}

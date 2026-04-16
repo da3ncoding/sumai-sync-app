@@ -3,14 +3,15 @@
 // サイドバーナビゲーション
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MapPin, BarChart2, LogOut } from "lucide-react";
+import { Home, MapPin, BarChart2, Settings, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 
 const navItems = [
   { href: "/properties", label: "物件一覧", icon: Home },
-  { href: "/map", label: "地図", icon: MapPin },
-  { href: "/ranking", label: "ランキング", icon: BarChart2 },
+  { href: "/map",        label: "地図",     icon: MapPin },
+  { href: "/ranking",    label: "ランキング", icon: BarChart2 },
+  { href: "/settings",   label: "設定",     icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -24,7 +25,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-56 min-h-screen bg-zinc-900 border-r border-zinc-800 flex flex-col">
+    <aside className="hidden md:flex w-56 min-h-screen bg-zinc-900 border-r border-zinc-800 flex-col">
       {/* タイトル */}
       <div className="px-5 py-5 border-b border-zinc-800">
         <div className="text-base font-bold text-white">SumaiSync</div>
@@ -41,7 +42,7 @@ export default function Sidebar() {
               href={href}
               className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
                 isActive
-                  ? "bg-emerald-500/15 text-emerald-400"
+                  ? "bg-[var(--accent-muted)] text-[var(--accent)]"
                   : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
               }`}
             >

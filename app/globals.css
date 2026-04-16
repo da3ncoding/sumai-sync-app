@@ -3,6 +3,33 @@
 :root {
   --background: #09090b;
   --foreground: #fafafa;
+  --accent: #34d399;
+  --accent-hover: #6ee7b7;
+  --accent-muted: rgb(52 211 153 / 15%);
+}
+
+[data-accent="sky"] {
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --accent-muted: rgb(56 189 248 / 15%);
+}
+
+[data-accent="violet"] {
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-muted: rgb(167 139 250 / 15%);
+}
+
+[data-accent="rose"] {
+  --accent: #fb7185;
+  --accent-hover: #fda4af;
+  --accent-muted: rgb(251 113 133 / 15%);
+}
+
+[data-accent="orange"] {
+  --accent: #fb923c;
+  --accent-hover: #fdba74;
+  --accent-muted: rgb(251 146 60 / 15%);
 }
 
 body {

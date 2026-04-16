@@ -90,7 +90,7 @@ vi.mock("@/lib/supabaseClient", () => ({
               select: () => ({
                 single: () =>
                   mockUpdateRating(data).then(() =>
-                    Promise.resolve({ data: { ...data, id: "rating-1" } })
+                    Promise.resolve({ data: { ...(data as object), id: "rating-1" } })
                   ),
               }),
             }),
@@ -106,6 +106,26 @@ vi.mock("@/lib/supabaseClient", () => ({
           }),
           insert: () => Promise.resolve({ error: null }),
           delete: () => ({ eq: () => Promise.resolve({ error: null }) }),
+        };
+      }
+      if (table === "pairs") {
+        return {
+          select: () => ({
+            or: () => ({
+              eq: () => ({
+                maybeSingle: () => Promise.resolve({ data: { user_a_id: "user-123", user_b_id: "user-456" } }),
+              }),
+            }),
+          }),
+        };
+      }
+      if (table === "users") {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({ data: { display_name: "はなこ" } }),
+            }),
+          }),
         };
       }
     },
