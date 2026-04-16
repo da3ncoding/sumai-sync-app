@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -162,6 +163,17 @@ export default function LoginPage() {
               {loading ? "処理中..." : mode === "login" ? "ログイン" : "アカウント作成"}
             </button>
           </form>
+
+          {mode === "login" && (
+            <div className="mt-4 text-center">
+              <Link
+                href="/forgot-password"
+                className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                パスワードをお忘れの方
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

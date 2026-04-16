@@ -30,8 +30,9 @@ export async function proxy(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // 未ログインで /login 以外にアクセスしたらリダイレクト
-  if (!user && pathname !== "/login") {
+  // 未ログインで公開ページ以外にアクセスしたらリダイレクト
+  const publicPaths = ["/login", "/forgot-password", "/auth/reset-password"];
+  if (!user && !publicPaths.includes(pathname)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
